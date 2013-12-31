@@ -1,17 +1,18 @@
 <?php
 /*
-Plugin Name: RelatedArticles
-Plugin URI: http://timelord.nl/wordpress/product/related?lang=en
+Plugin Name: Related Articles
+Plugin URI: https://github.com/nmorse/related_articles.git
 Description: A simple 'related posts' plugin that lets you select related posts manually.
 Version: 1.4.1
-Author: Marcel Pol
-Author URI: http://timelord.nl
-Text Domain: related
+Author: nmorse
+Author URI: https://github.com/nmorse/related_articles.git
+Text Domain: related articles
 Domain Path: /lang/
 
 
 Copyright 2010-2012  Matthias Siegel  (email: matthias.siegel@gmail.com)
 Copyright 2013       Marcel Pol       (email: marcel@timelord.nl)
+Copyright 2014       NMorse       (email: n8morse@gmail.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -53,8 +54,8 @@ if (!class_exists('RelatedArticles')) :
 		// Defines a few static helper values we might need
 		protected function defineConstants() {
 
-			define('RELATED_VERSION', '1.4.1');
-			define('RELATED_HOME', 'http://timelord.nl');
+			define('RELATED_VERSION', '1.4.1.1');
+			define('RELATED_HOME', 'https://github.com/nmorse/related_articles.git');
 			define('RELATED_FILE', plugin_basename(dirname(__FILE__)));
 			define('RELATED_ABSPATH', str_replace('\\', '/', WP_PLUGIN_DIR . '/' . plugin_basename(dirname(__FILE__))));
 			define('RELATED_URLPATH', WP_PLUGIN_URL . '/' . plugin_basename(dirname(__FILE__)));
@@ -143,7 +144,8 @@ if (!class_exists('RelatedArticles')) :
 
 			if (!empty($related_articles)) :
 				foreach($related_articles as $r) :
-					$p = get_post($r);
+                    $p = get_page_by_path($r);
+					//$p = get_post($r);
 					echo '
 						<div class="related-articles" id="related-articles-' . $r . '">
 							<input type="hidden" name="related-articles[]" value="' . $r . '">
@@ -191,7 +193,7 @@ if (!class_exists('RelatedArticles')) :
 			$count = count($p->posts);
 			$counter = 1;
 			foreach ($p->posts as $thePost) {
-				if ( is_int( $counter / 500 ) ) {
+				if ( is_int( $counter / 5000 ) ) {
 					echo '
 						</select>
 					</p>
@@ -201,7 +203,7 @@ if (!class_exists('RelatedArticles')) :
 				}
 				?>
 				<option value="<?php
-					echo $thePost->ID; ?>"><?php echo
+					echo $thePost->post_name; ?>"><?php echo
 					$thePost->post_title.' ('.ucfirst(get_post_type($thePost->ID)).')'; ?></option>
 				<?php
 				$counter++;
@@ -230,7 +232,8 @@ if (!class_exists('RelatedArticles')) :
 				if (!empty($related_articles)) :
 					$rel = array();
 					foreach ($related_articles as $r) :
-						$p = get_post($r);
+                        $p = get_page_by_path($r);
+						//$p = get_post($r);
 						$rel[] = $p;
 					endforeach;
 

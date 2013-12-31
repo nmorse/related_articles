@@ -71,10 +71,10 @@ class Related_Articles_Widget extends WP_Widget {
     	 */
     	$default_value	=	array( "title"=> "Related Articles" );
     	$instance		=	wp_parse_args( (array) $instance, $default_value );
-
+        $path           =   $instance['path'];
 		$title = isset($instance['title']) ? esc_attr($instance['title']) : ''; ?>
-		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'related_articles'); ?></label>
-		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p><?php
+		<p><label for="<?php echo $path; ?>"><?php _e('Title', 'related_articles'); ?></label>
+		<input class="widefat" id="<?php echo $path; ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p><?php
 	}
 }
 

@@ -136,7 +136,6 @@ if (!class_exists('RelatedArticles')) :
 			global $post;
 
 			$post_id = $post->ID;
-
 			echo '<div id="related-articles">';
 
 			// Get related posts if existing
@@ -144,12 +143,17 @@ if (!class_exists('RelatedArticles')) :
 
 			if (!empty($related_articles)) :
 				foreach($related_articles as $r) :
-                    $p = get_page_by_path($r);
-					//$p = get_post($r);
+					$args=array(
+						'name' => $r,
+						'post_type' => 'post',
+						'post_status' => 'publish',
+						'posts_per_page' => 1
+					);
+					$p = get_posts( $args );
 					echo '
 						<div class="related-articles" id="related-articles-' . $r . '">
 							<input type="hidden" name="related-articles[]" value="' . $r . '">
-							<span class="related-articles-title">' . $p->post_title . ' (' . ucfirst(get_post_type($p->ID)) . ')</span>
+							<span class="related-articles-title">' . $r . " " . $p[0]->post_title . '</span>
 							<a href="#">' . __('Delete', 'related_articles' ) . '</a>
 						</div>';
 				endforeach;
@@ -232,9 +236,14 @@ if (!class_exists('RelatedArticles')) :
 				if (!empty($related_articles)) :
 					$rel = array();
 					foreach ($related_articles as $r) :
-                        $p = get_page_by_path($r);
-						//$p = get_post($r);
-						$rel[] = $p;
+						$args=array(
+							'name' => $r,
+							'post_type' => 'post',
+							'post_status' => 'publish',
+							'posts_per_page' => 1
+						);
+						$p = get_posts( $args );
+						$rel[] = $p[0];
 					endforeach;
 
 					// If value should be returned as array, return it
@@ -267,7 +276,7 @@ if (!class_exists('RelatedArticles')) :
 			// Handle the POST
 			if ( isset( $_POST['form'] ) ) {
 				if ( function_exists('current_user_can') && !current_user_can('manage_options') ) {
-					die(__('Cheatin&#8217; uh?'));
+					die(__('sour&#8217; uh?'));
 				}
 				if ( $_POST['form'] == 'show' ) {
 					$showkeys = array();
@@ -429,8 +438,6 @@ function related_articles_init() {
 	$related_articles = new RelatedArticles();
 }
 add_action('plugins_loaded', 'related_articles_init');
-
-
 
 
 ?>

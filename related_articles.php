@@ -165,7 +165,7 @@ if (!class_exists('RelatedArticles')) :
 					<select class="related-articles-select" name="related-articles-select">
 						<option value="0">' . __('Select', 'related_articles' ) . '</option>';
 
-			$related_articles_list = get_option('related_list');
+			$related_articles_list = get_option('related_articles_list');
 			$related_articles_list = json_decode( $related_articles_list );
 			if ( empty( $related_articles_list ) ) {
 				$related_articles_list = array();
@@ -297,7 +297,7 @@ if (!class_exists('RelatedArticles')) :
 						$listkeys[] = str_replace('list_', '', $key);
 					}
 					$listkeys = json_encode($listkeys);
-					update_option( 'related_list', $listkeys );
+					update_option( 'related_articles_list', $listkeys );
 				}
 			}
 

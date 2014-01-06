@@ -220,7 +220,7 @@ if (!class_exists('RelatedArticles')) :
 					</select>
 				</p>
 				<p>' .
-					__('Select related posts from the list. Drag selected ones to change order.', 'related_articles' )
+					__('Select any related articles from the list. Drag articles above to change order.', 'related_articles' )
 				. '</p>';
 		}
 
